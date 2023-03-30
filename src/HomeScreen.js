@@ -1,13 +1,15 @@
 import React from "react";
+import "./assets/css/HomeScreen.css";
 import Nav from "./components/Nav";
-import "./HomeScreen.css";
+import Banner from "./components/Banner";
 
-function HomeScreen() {
+const HomeScreen = () => {
   return (
     <div className="homeScreen">
       <Nav />
+      <Banner />
     </div>
   );
-}
+};
 
 export default HomeScreen;

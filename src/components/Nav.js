@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../Nav.css";
+import "../assets/css/Nav.css";
 import NetflixLogo from "../assets/images/NetflixLogo.png";
 import ProfileImage from "../assets/images/ProfileImage.png";
 
-function Nav() {
+const Nav = () => {
   const [show, handleShow] = useState(false);
 
   const transitionNavBar = () => {
@@ -25,6 +25,6 @@ function Nav() {
       </div>
     </div>
   );
-}
+};
 
 export default Nav;
