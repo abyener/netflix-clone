@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/Banner.css";
-import BannerImage from "../assets/images/BlackBanner.png";
+import axios from "../axios";
+import requests from "../Requests";
 
 const Banner = () => {
+  const [movie, setMovie] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const request = await axios.get(requests.fetchNetflixoriginals);
+      //   setMovie(request.data.results);
+      setMovie(
+        request.data.results[
+          Math.floor(Math.random() * request.data.results.length - 1)
+        ]
+      );
+      return request;
+    }
+
+    fetchData();
+  }, []);
+
   const turncate = (string, n) => {
     return string?.length > n ? string.substring(0, n - 1) + "..." : string;
   };
@@ -12,12 +30,14 @@ const Banner = () => {
       className="banner"
       style={{
         backgroundSize: "cover",
-        backgroundImage: `url(${BannerImage})`,
+        backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}" )`,
         backgroundPosition: "center center",
       }}
     >
       <div className="banner_contents">
-        <h1 className="banner_title">Movie Name</h1>
+        <h1 className="banner_title">
+          {movie?.name || movie?.title || movie?.original_name}
+        </h1>
         <div className="banner_buttons">
           <button type="button" className="banner_button">
             Play
@@ -26,12 +46,7 @@ const Banner = () => {
             My List
           </button>
         </div>
-        <h1 className="banner_description">
-          {turncate(
-            ` This is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test descriptionThis is a test description`,
-            150
-          )}
-        </h1>
+        <h1 className="banner_description">{turncate(movie?.overview, 150)}</h1>
       </div>
 
       <div className="banner--fadeBottom" />
