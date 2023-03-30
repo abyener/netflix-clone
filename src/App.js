@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import HomeScreen from "./HomeScreen";
+import { auth } from "./firebase";
+import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 const App = () => {
+  const user = null;
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      if (userAuth) {
+        //giriş yapıldı
+        console.log(userAuth);
+      } else {
+        // çıkış yapıldı
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   return (
     <div className="app">
-      <HomeScreen />
+      <Router>
+        {!user ? (
+          <LoginScreen />
+        ) : (
+          <Switch>
+            <Route path="/test">
+              <h1>test</h1>
+            </Route>
+            <Route exact path="/">
+              <HomeScreen />
+            </Route>
+          </Switch>
+        )}
+      </Router>
     </div>
   );
 };
